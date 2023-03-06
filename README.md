@@ -1,5 +1,19 @@
 # OOPS Assignment: Payroll System 
- 
+# Installation Guide Spring Tool Suite
+
+**Clone Repository anywhere you want using this Command**
+
+```
+git clone https://github.com/yankit293/oops_assignment.git
+```
+Once cloned or Downloaded 
+- Open STS 
+- Click on File
+- Select Open projects from File System
+- Navigate to Dir where you cloned source code.
+- Select src Folder 
+- Done.
+
 # Objective 
 Use Object Oriented Programming (OOP) in Java to create a Payroll system. This assignment 
 will focus on: 
