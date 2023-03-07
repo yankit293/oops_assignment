@@ -5,56 +5,22 @@ import java.util.Scanner;
 
 public class Payroll {
 
-	public static void main(String[] args) {
-		char choice = 'Y', workType;
-		double totalWage = 0, totalTaxWage = 0, taxWage = 0, wage;
-		int countTemp = 0, countCon = 0, countFull = 0, empId;
-		String empName;
+	public static void main(String[] args) throws Exception {
+		char choice = 'Y';
+		double totalWage = 0, totalTaxWage = 0, taxWage = 0;
+		int countTemp = 0, countCon = 0, countFull = 0;
 		Scanner sc = new Scanner(System.in);
 		ArrayList<Employee> employees = new ArrayList<Employee>();
-		do {
-			// Reading inputs
-			while (true) {
-				try {
-					System.out.println("Please enter the employee’s name?");
-					empName = sc.nextLine();
-					Validator.validateName(empName);
-					break;
-				} catch (InvalidNameException e) {
-					System.out.println(e);
-				}
-			}
+		GetUserInput input = new GetUserInput();
 
-			while (true) {
-				try {
-					System.out.println("Please enter the employee’s ID?");
-					empId = sc.nextInt();
-					Validator.validateId(empId);
-					break;
-				} catch (InvalidIdException e) {
-					System.out.println(e);
-				} catch (Exception e) {
-					System.out.println(e);
-					sc.nextLine();
-				}
+		while (true) {
 
-			}
-			System.out.println("Please enter the employee’s work type (T,C,F) only?");
-			workType = sc.next().charAt(0);
-
-			while (true) {
-				try {
-					System.out.println("Please enter the employee’s wage?");
-					wage = sc.nextDouble();
-					Validator.validateWage(wage, workType);
-					break;
-				} catch (InvalidWageException e) {
-					System.out.println(e);
-				} catch (Exception e) {
-					System.out.println(e);
-					sc.nextLine();
-				}
-			}
+			// Choice Y
+			// Take input From user.
+			String empName = input.getEmpNameInput(sc);
+			int empId = input.getEmpIdInput(sc);
+			char workType = input.getWorkTypeInput(sc);
+			double wage = input.getWageInput(sc, workType);
 
 			// create instance of class
 			Employee employee = new Employee(empName, empId, workType, wage);
@@ -63,35 +29,51 @@ public class Payroll {
 			employee.setTaxWage(taxWage);
 			System.out.println("Employee’s wage after tax:" + taxWage);
 			System.out.println("**********************************************");
-			System.out.println("Do you want to register another employee (Y/N)?");
-			choice = sc.next().charAt(0);
+			while (true) {
+				System.out.println("Do you want to register another employee (Y/N)?");
+				choice = sc.next().charAt(0);
+				if (choice == 'Y' || choice == 'N') {
+					break;
+				} else {
+					System.out.println("Choice should be Y or N!");
+					sc.nextLine();
+				}
+			}
 			sc.nextLine();
 
-		} while (choice == 'Y' || choice == 'y');
+			// Choice N output
+			if (choice == 'N') {
+				for (int i = 0; i < employees.size(); i++) {
+					Employee emp = employees.get(i);
 
-		// loop employee array and count work type also calculate total wage before tax
-		// and total wage after tax
-		for (int i = 0; i < employees.size(); i++) {
-			Employee emp = employees.get(i);
-			System.out.println((i + 1) + ". " + emp.getName() + ", " + emp.getEmpId() + ", " + emp.getWorkType() + ", "
-					+ "$" + emp.getWage() + "," + "$" + emp.getTaxWage());
-			if (emp.getWorkType() == 'T')
-				countTemp++;
-			else if (emp.getWorkType() == 'C')
-				countCon++;
-			else if (emp.getWorkType() == 'F')
-				countFull++;
-			totalWage = totalWage + emp.getWage();
-			totalTaxWage = totalTaxWage + emp.getTaxWage();
+					// Display Employees details
+					System.out.println((i + 1) + ". " + emp.getEmpName() + ", " + emp.getEmpId() + ", "
+							+ emp.getWorkType() + ", " + "$" + emp.getWage() + "," + "$" + emp.getTaxWage());
 
+					// Count Temporary , Contract and Full Time Employees
+					if (emp.getWorkType() == 'T') {
+						countTemp++;
+					} else if (emp.getWorkType() == 'C') {
+						countCon++;
+					} else if (emp.getWorkType() == 'F') {
+						countFull++;
+					}
+
+					// Calculate wage before Tax
+					totalWage = totalWage + emp.getWage();
+
+					// Calculate total wage after Tax
+					totalTaxWage = totalTaxWage + emp.getTaxWage();
+
+				}
+				System.out.println("Total employees: " + employees.size());
+				System.out.printf("Work types: (%d) Temporary, (%d) Contract, (%d) Full-time", countTemp, countCon,
+						countFull).println();
+				System.out.println("Total wages before tax:$" + totalWage);
+				System.out.println("Total wages After tax:$" + totalTaxWage);
+				break;
+			}
 		}
-		sc.close();
-		// option N output in console
-		System.out.println("Total employees: " + employees.size());
-		System.out.printf("Work types: (%d) Temporary, (%d) Contract, (%d) Full-time", countTemp, countCon, countFull)
-				.println();
-		System.out.println("Total wages before tax:$" + totalWage);
-		System.out.println("Total wages After tax:$" + totalTaxWage);
 
 	}
 

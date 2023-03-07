@@ -1,58 +1,58 @@
 package employeePayRoll;
 
-class InvalidNameException extends Exception {
-
-	public InvalidNameException(String str) {
-		super(str);
-	}
-}
-
-class InvalidIdException extends Exception {
-	public InvalidIdException(String str) {
-		super(str);
-	}
-}
-
-class InvalidWageException extends Exception {
-	public InvalidWageException(String str) {
-		super(str);
-	}
-}
-
 public class Validator {
 
 	// validate name
-	public static void validateName(String empName) throws InvalidNameException {
+	public static boolean validateName(String empName) {
 
-		if (!(empName.length() > 5)) {
-			throw new InvalidNameException("Employee name cannot be less than 5 characters!");
+		if (empName.length() < 5) {
+			System.out.println("Employee name cannot be less than 5 characters!");
+			return false;
 		} else if (!(empName.trim().contains(" "))) {
-			throw new InvalidNameException("Employee name must have at least one space!");
+			System.out.println("Employee name must have at least one space!");
+			return false;
 		}
+		return true;
 	}
 
 	// validate ID
-	public static void validateId(int empId) throws InvalidIdException {
+	public static boolean validateId(int empId) {
 		if (empId < 0) {
-			throw new InvalidIdException("Employee ID must be a positive integer!");
+			System.out.println("Employee ID must be a positive integer!");
+			return false;
 		}
+
+		return true;
 
 	}
 
+	public static boolean validateWorkType(char workType) {
+		if (workType == 'T' || workType == 'C' || workType == 'F') {
+			return true;
+		} else {
+			System.out.println("Wpork Type can only be (T, C, F)!");
+			return false;
+		}
+	}
+
 	// validate Wage
-	public static void validateWage(double wage, char workType) throws InvalidWageException {
+	public static boolean validateWage(double wage, char workType) {
 		if (workType == 'T') {
 			if (wage > 90) {
-				throw new InvalidWageException("The hourly pay cannot exceed 90.00 but can be 0!");
+				System.out.println("The hourly pay cannot exceed 90.00 but can be 0!");
+				return false;
 			}
 		} else if (workType == 'C') {
 			if (wage < 1000 || wage > 3500) {
-				throw new InvalidWageException("The bi-weekly pay cannot be below 1000.00 or more than 3500.00!");
+				System.out.println("The bi-weekly pay cannot be below 1000.00 or more than 3500.00!");
+				return false;
 			}
 		} else if (workType == 'F') {
 			if (wage < 3000) {
-				throw new InvalidWageException("The monthly pay cannot be less than 3000.00!");
+				System.out.println("The monthly pay cannot be less than 3000.00!");
+				return false;
 			}
 		}
+		return true;
 	}
 }

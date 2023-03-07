@@ -44,7 +44,7 @@ public class Employee {
 	}
 
 	// getter methods to access the data
-	public String getName() {
+	public String getEmpName() {
 		return this.empName;
 	}
 
