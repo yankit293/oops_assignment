@@ -45,23 +45,16 @@ public class Payroll {
 			if (choice == 'N') {
 				for (int i = 0; i < employees.size(); i++) {
 					Employee emp = employees.get(i);
-
 					// Display Employees details
 					System.out.println((i + 1) + ". " + emp.getEmpName() + ", " + emp.getEmpId() + ", "
 							+ emp.getWorkType() + ", " + "$" + emp.getWage() + "," + "$" + emp.getTaxWage());
-
 					// Count Temporary , Contract and Full Time Employees
-					if (emp.getWorkType() == 'T') {
-						countTemp++;
-					} else if (emp.getWorkType() == 'C') {
-						countCon++;
-					} else if (emp.getWorkType() == 'F') {
-						countFull++;
-					}
+					if (emp.getWorkType() == 'T') countTemp++;
+					else if (emp.getWorkType() == 'C') countCon++;
+					else if (emp.getWorkType() == 'F') countFull++;
 
 					// Calculate wage before Tax
 					totalWage = totalWage + emp.getWage();
-
 					// Calculate total wage after Tax
 					totalTaxWage = totalTaxWage + emp.getTaxWage();
 
@@ -76,20 +69,18 @@ public class Payroll {
 		}
 
 	}
-
-	// calculate wage based on work type
 	public static double calculateTaxWage(char workType, double wage) {
-		double taxWage = 0;
+		CalculateWageAfterTax c = (w, r) -> w - w*r/100;
 		if (workType == 'T') {
-			taxWage = wage - (wage * 15 / 100);
+			return c.calculateTax(wage, 15);
 		} else if (workType == 'C') {
-			taxWage = wage - (wage * 18 / 100);
+			return c.calculateTax(wage, 18);
 		} else if (workType == 'F') {
 			double benifits = wage * 10 / 100;
-			taxWage = wage - (wage * 20 / 100) - benifits;
+			return c.calculateTax(wage, 20) - benifits;
 
 		}
-		return taxWage;
+		return -1;
 	}
 
 }

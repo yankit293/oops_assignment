@@ -11,10 +11,6 @@ public class Employee {
 	private double wage;
 	private double taxWage;
 
-	/*
-	 * Constructor’s parameters: • Employee’s Name, Employee ID, Work Type (T, C,
-	 * F), Wage
-	 */
 	public Employee(String empName, int empId, char workType, double wage) {
 		this.empName = empName;
 		this.empId = empId;
@@ -23,44 +19,16 @@ public class Employee {
 	}
 
 	// setter methods to update data if needed
-	public void setEmpName(String empName) {
-		this.empName = empName;
-	}
-
-	public void setEmpId(int empId) {
-		this.empId = empId;
-	}
-
-	public void setWorkType(char workType) {
-		this.workType = workType;
-	}
-
-	public void setWage(double wage) {
-		this.wage = wage;
-	}
-
-	public void setTaxWage(double taxWage) {
-		this.taxWage = taxWage;
-	}
+	public void setEmpName(String empName) { this.empName = empName; }
+	public void setEmpId(int empId) { this.empId = empId; }
+	public void setWorkType(char workType) { this.workType = workType; }
+	public void setWage(double wage) { this.wage = wage; }
+	public void setTaxWage(double taxWage) { this.taxWage = taxWage; }
 
 	// getter methods to access the data
-	public String getEmpName() {
-		return this.empName;
-	}
-
-	public int getEmpId() {
-		return this.empId;
-	}
-
-	public double getWage() {
-		return this.wage;
-	}
-
-	public char getWorkType() {
-		return this.workType;
-	}
-
-	public double getTaxWage() {
-		return this.taxWage;
-	}
+	public String getEmpName() { return this.empName; }
+	public int getEmpId() { return this.empId; }
+	public double getWage() { return this.wage; }
+	public char getWorkType() { return this.workType; }
+	public double getTaxWage() { return this.taxWage; }
 }
